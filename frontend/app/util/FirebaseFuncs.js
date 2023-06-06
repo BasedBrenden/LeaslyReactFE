@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from 'firebase/app';
-import { getFirestore } from "firebase/firestore";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail,updateProfile} from 'firebase/auth';
-import { doc } from "firebase/firestore";
+import {getFirestore} from 'firebase/firestore';
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateProfile} from 'firebase/auth';
+import {doc} from 'firebase/firestore';
 
 
 // Your web app's Firebase configuration
@@ -23,7 +23,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const apts = doc(db, 'Apartments/tpXRcGGobTdqJykiTlfs');
-
-
-export {app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateProfile, db, apts};
+export {app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateProfile, db, doc};
