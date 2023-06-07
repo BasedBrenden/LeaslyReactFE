@@ -1,17 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import testPFP from '../../assets/profile/dog.jpg';
 import './ApartmentReviews.css';
 
-export default function ApartmentReviews({identifier}) {
-  const ApartmentName = identifier;
+export default function ApartmentReviews({reviews, ApartmentName}) {
   const navigation = useNavigation();
-  const [reviews, setReviews] = useState([]);
-
-  useEffect(() => {
-    fetch(`https://leaslybackend.herokuapp.com/api/review?apartment=${ApartmentName}`).then((res) => res.json()).then((data) => setReviews(data));
-  }, [ApartmentName]);
-
   return (
     <div className="reviewContainer">
       <p className="reviewTitle"> Reviews</p>

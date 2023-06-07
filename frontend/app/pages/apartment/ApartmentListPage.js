@@ -29,7 +29,7 @@ export default function ApartmentListPage(props) {
                       or pass the apartments name itself to navigate("")*/}
             {/* :id will replace /00. :id is simply the UUID for the apartment that they are clicking on, or just apartment.name for now */}
             <button className="generalBtn" type="button" onClick={() => {
-              navigation.navigate('viewApartment', {apartment});
+              navigation.navigate('viewApartment', {apartment: apartment.name});
             }}>More Info</button>
           </div>)}
       </div>
