@@ -16,7 +16,7 @@ import {
 import Carousel from 'react-native-reanimated-carousel';
 */
 
-const ApartmentSubleaseBoard = ({listings}) => {
+const ApartmentSubleaseBoard = ({listings, apartmentName}) => {
   /* ---------------------------------- Props --------------------------------- */
   // const {navigation, listings} = props;
   const navigation = useNavigation();
@@ -59,7 +59,7 @@ const ApartmentSubleaseBoard = ({listings}) => {
     <div className="bountyContainer">
       <p className="bountyTitle">Subleases Available </p>
       <button type="button" className="aptmntViewButton"onClick={() => {
-        navigation.navigate('addApartment');
+        navigation.navigate('addApartment', {apartmentName});
       }}> Post a Sublease </button>
       <div className="bountyView">
         {(listings.length === 0) ? <p className="noSubleases"> No Current Subleases!</p> :

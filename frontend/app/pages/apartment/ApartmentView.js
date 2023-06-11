@@ -146,7 +146,7 @@ export default function ViewApartmentPage({ }) {
         </div>
       </div>
       <div className="subleaseViewContainer">
-        <ApartmentSubleaseBoard listings={listings} />
+        <ApartmentSubleaseBoard listings={listings} apartmentName={apartmentInfo.name}/>
       </div>
       <div className="reviewViewContainer">
         <ApartmentReviews reviews={reviews} apartmentName={apartmentInfo.name}/>

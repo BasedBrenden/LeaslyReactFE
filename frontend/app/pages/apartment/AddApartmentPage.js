@@ -1,37 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { auth } from '../../util/FirebaseFuncs';
-import axios from 'axios';
+import React, {useState, useEffect} from 'react';
+import {auth} from '../../util/FirebaseFuncs';
+import {useRoute} from '@react-navigation/native';
 
 
 export default function AddApartmentPage(props) {
-  const {navigation} = props;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [formData, setFormData] = useState({
-    user_id: '',
-    apartment: '',
+  const apartmentName = useRoute().params.apartmentName;
+  const {navigation} = props;
+  const [subleaseData, setSubleaseData] = useState({
+    leaserId: '',
+    apartmentName: '',
     rent: '',
-    bed: '',
-    bath: '',
+    bedrooms: '',
+    bathrooms: '',
+    startDate: '',
+    endDate: '',
     sqft: '',
     description: '',
-    location: '',
-    image: null,
+    address: '',
   });
 
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
+    const {name, value} = event.target;
+    setSubleaseData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
-    }));
-  };
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      image: file,
     }));
   };
 
@@ -39,77 +33,72 @@ export default function AddApartmentPage(props) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuthenticated(true);
+        setSubleaseData((prevFormData) => ({
+          ...prevFormData,
+          leaserId: auth.currentUser.displayName,
+          apartmentName: apartmentName,
+        }));
       } else {
         setIsAuthenticated(false);
       }
     });
     return unsubscribe;
+    // eslint-disable-next-line
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formDataToSend = new FormData();
-    formDataToSend.append('user_id', auth.currentUser.displayName);
-    formDataToSend.append('apartment', formData.apartment);
-    formDataToSend.append('rent', formData.rent);
-    formDataToSend.append('bed', formData.bed);
-    formDataToSend.append('bath', formData.bath);
-    formDataToSend.append('sqft', formData.sqft);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('location', formData.location);
-    formDataToSend.append('image', formData.image);
-
-    axios.post('https://leaslybackend.herokuapp.com/api/listings', formDataToSend)
-      .then((response) => {
-        console.log(response.data);
-        navigation.navigate('home');
-      })
-      .catch((error) => {
-        console.log(error);
-        // do something with the error, e.g. show an error message
-      });
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/subleases/' + subleaseData.apartmentName, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(subleaseData),
+    }).then((response) => {
+      console.log(subleaseData);
+      navigation.navigate('home');
+    }).catch((error) => {
+      console.log(error);
+      // do something with the error, e.g. show an error message
+    });
   };
 
   if (!isAuthenticated) {
     return (
       <>
-        <h2 style={{ color: 'black' }}>You need to sign in to add a new apartment.</h2>
+        <h2 style={{color: 'black'}}>You need to sign in to add a new apartment.</h2>
       </>
     );
   } else {
     return (
       <form onSubmit={handleSubmit}>
         <label>
-          Apartment:
-          <input type="text" name="apartment" value={formData.apartment} onChange={handleInputChange} />
-        </label>
-        <label>
           Rent:
-          <input type="number" name="rent" value={formData.rent} onChange={handleInputChange} />
+          <input type="number" name="rent" value={subleaseData.rent} onChange={handleInputChange} />
         </label>
         <label>
           Bed:
-          <input type="number" name="bed" value={formData.bed} onChange={handleInputChange} />
+          <input type="number" name="bedrooms" value={subleaseData.bedrooms} onChange={handleInputChange} />
         </label>
         <label>
           Bath:
-          <input type="number" name="bath" value={formData.bath} onChange={handleInputChange} />
+          <input type="number" name="bathrooms" value={subleaseData.bathrooms} onChange={handleInputChange} />
         </label>
         <label>
           Sqft:
-          <input type="number" name="sqft" value={formData.sqft} onChange={handleInputChange} />
+          <input type="number" name="sqft" value={subleaseData.sqft} onChange={handleInputChange} />
+        </label>
+        <label>
+          Start Date:
+          <input type="date" name="startDate" required pattern="\d{4}-\d{2}-\d{2}" value={subleaseData.startDate} onChange={handleInputChange} />
+        </label>
+        <label>
+          End Date:
+          <input type="date" name="endDate" required pattern="\d{4}-\d{2}-\d{2}" value={subleaseData.endDate} onChange={handleInputChange} />
         </label>
         <label>
           Description:
-          <textarea name="description" value={formData.description} onChange={handleInputChange} />
-        </label>
-        <label>
-          Location:
-          <input type="text" name="location" value={formData.location} onChange={handleInputChange} />
-        </label>
-        <label>
-          Image:
-          <input type="file" name="image" onChange={handleImageChange} />
+          <textarea name="description" value={subleaseData.description} onChange={handleInputChange} />
         </label>
         <button type="submit">Submit</button>
       </form>

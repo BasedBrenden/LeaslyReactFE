@@ -4,29 +4,29 @@ import {useRoute} from '@react-navigation/native';
 
 export default function ReviewApartment() {
   const route = useRoute();
-  const {ApartmentName} = route.params;
+  const apartmentName = route.params.apartmentName;
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
   const handleSubmit = () => {
     const data = {
       userId: auth.currentUser.displayName,
-      apartment: ApartmentName,
+      apartmentName: apartmentName,
       rating: rating,
       description: comment,
     };
     console.log(data);
-    fetch('https://leaslybackend.herokuapp.com/api/review', {
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/reviews/' + apartmentName, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json()).then((responseData) => {
-      console.log('Success:', responseData);
+    }).then(() => {
+      console.log('Success!');
       document.querySelector('.reviewStatus').innerHTML = 'Review Submitted!';
     }).catch((error) => {
-      console.error('Error:', error);
+      document.querySelector('.reviewStatus').innerHTML = 'Error: ' + error;
     });
   };
   return (

@@ -2,19 +2,15 @@ import React, {useState, useEffect} from 'react';
 import {auth} from '../../util/FirebaseFuncs';
 
 export default function ProfilePage() {
-  const [data, setdata] = useState({
-    listings: [],
-    reviews: [],
-  });
-
+  const [listings, setListings] = useState([]);
+  const [reviews, setReviews] = useState([]);
   // Using useEffect for single rendering
   useEffect(() => {
     // Using fetch to fetch the listings API
     fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/userSubleases/' + auth.currentUser.displayName).then((res) =>
       res.json().then((sublets) => {
         // Setting data for listings
-        setdata({...data,
-          listings: sublets});
+        setListings(sublets);
       }),
     );
 
@@ -22,11 +18,9 @@ export default function ProfilePage() {
     fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/userReviews/' + auth.currentUser.displayName).then((res) =>
       res.json().then((reviews) => {
         // Setting data for reviews
-        setdata({...data,
-          reviews: reviews});
+        setReviews(reviews);
       }),
     );
-    // eslint-disable-next-line
   }, []);
 
   return (
@@ -35,11 +29,11 @@ export default function ProfilePage() {
       <p>{auth.currentUser.displayName}</p>
       <h1 style={{color: 'black'}}>Your listings</h1>
       <div className="listings">
-        {data.listings.map((sublet) =>
+        {listings.map((sublet) =>
           <div key={sublet.rent}>
             <ul>
-              <li>Apartment name: </li>
-              <li>Price: {sublet.rent}</li>
+              <li>Apartment name: {sublet.apartmentName}</li>
+              <li>Price: ${sublet.rent}</li>
               <li>Start date: {sublet.startDate}</li>
               <li>End date: {sublet.endDate}</li>
               <li> Floor Plan: {sublet.bedrooms} bed, {sublet.bathrooms} bath</li>
@@ -52,10 +46,10 @@ export default function ProfilePage() {
 
       <h1 style={{color: 'black'}}>Your reviews</h1>
       <div className="reviews">
-        {data.reviews.map((review) =>
-          <div key={review.userId}>
+        {reviews.map((review, index) =>
+          <div key={index}>
             <ul>
-              <li>Apartment name: </li>
+              <li>Apartment name: {review.apartmentName}</li>
               <li>Rating: {review.rating}</li>
               <li>Comment: {review.description}</li>
             </ul>

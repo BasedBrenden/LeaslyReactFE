@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import testPFP from '../../assets/profile/dog.jpg';
 import './ApartmentReviews.css';
 
-export default function ApartmentReviews({reviews, ApartmentName}) {
+export default function ApartmentReviews({reviews, apartmentName}) {
   const navigation = useNavigation();
   return (
     <div className="reviewContainer">
@@ -20,7 +20,7 @@ export default function ApartmentReviews({reviews, ApartmentName}) {
           ))}
       </div>
       <button type="button" className="aptmntViewButton" onClick={() => {
-        navigation.navigate('review', {ApartmentName});
+        navigation.navigate('review', {apartmentName: apartmentName});
       }}>
         Write a review!
       </button>

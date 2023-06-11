@@ -29,7 +29,7 @@ export default function ApartmentCarousel(props) {
           mr={25}>
           {item.leaserId &&
           <>
-            <Image alt="image" src={`${item.photo}`}/>
+            <Text> {item.apartmentName}</Text>
             <Text>Poster: {item.leaserId}</Text>
             <Text>Floor Plan: {item.bedrooms} bed, {item.bathrooms} bath</Text>
             <Text>Price: ${item.rent}/month</Text>
