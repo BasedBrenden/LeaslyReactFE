@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {Dimensions} from 'react-native';
 import {
   Button,
@@ -12,7 +13,8 @@ import Carousel from 'react-native-reanimated-carousel';
 
 export default function ApartmentCarousel(props) {
   /* ---------------------------------- Props --------------------------------- */
-  const {navigation, listings} = props;
+  const {listings} = props;
+  const navigate = useNavigation();
 
   /* ---------------------------- Utility Functions --------------------------- */
   const _renderItem = (index) => {
@@ -25,17 +27,15 @@ export default function ApartmentCarousel(props) {
           p={50}
           ml={25}
           mr={25}>
-          <Text fontSize={'xl'}>Subleases Available </Text>
-          {item.subleaser_id &&
+          {item.leaserId &&
           <>
-            <Image alt="image" src={`data:image/png;base64,${item.image}`}/>
-            <Text>{item.apartment_name}</Text>
-            <Text>Poster: {item.subleaser_id}</Text>
-            <Text>Floor Plan: {item.bed} bed, {item.bath} bath</Text>
+            <Image alt="image" src={`${item.photo}`}/>
+            <Text>Poster: {item.leaserId}</Text>
+            <Text>Floor Plan: {item.bedrooms} bed, {item.bathrooms} bath</Text>
             <Text>Price: ${item.rent}/month</Text>
             <Text>{item.description}</Text>
             <Button
-              onPress={() => navigation.navigate('messages', {sublet: item.subleaser_id})}>
+              onPress={() => navigate('messages', {sublet: item.leaserId})}>
                 Message
             </Button>
           </>
@@ -49,6 +49,7 @@ export default function ApartmentCarousel(props) {
 
   return (
     <View flex={true} w={'100%'} h={325}>
+      <Text fontSize={'xl'} textAlign={'center'}>Subleases Available </Text>
       <Carousel
         loop
         width={Dimensions.get('window').width}

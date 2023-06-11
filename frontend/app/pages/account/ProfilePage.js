@@ -10,26 +10,23 @@ export default function ProfilePage() {
   // Using useEffect for single rendering
   useEffect(() => {
     // Using fetch to fetch the listings API
-    fetch('https://leaslybackend.herokuapp.com/api/sublets?user=' + auth.currentUser.displayName).then((res) =>
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/userSubleases/' + auth.currentUser.displayName).then((res) =>
       res.json().then((sublets) => {
         // Setting data for listings
-        setdata((prevData) => ({
-          ...prevData,
-          listings: sublets,
-        }));
+        setdata({...data,
+          listings: sublets});
       }),
     );
 
     // Using fetch to fetch the reviews API
-    fetch('https://leaslybackend.herokuapp.com/api/review?name=' + auth.currentUser.displayName).then((res) =>
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/userReviews/' + auth.currentUser.displayName).then((res) =>
       res.json().then((reviews) => {
         // Setting data for reviews
-        setdata((prevData) => ({
-          ...prevData,
-          reviews: reviews,
-        }));
+        setdata({...data,
+          reviews: reviews});
       }),
     );
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -41,10 +38,11 @@ export default function ProfilePage() {
         {data.listings.map((sublet) =>
           <div key={sublet.rent}>
             <ul>
-              <li>Apartment name: {sublet.apartment_name}</li>
+              <li>Apartment name: </li>
               <li>Price: {sublet.rent}</li>
-              <li>Start date: {sublet.start_date}</li>
-              <li> Floor Plan: {sublet.bed} bed, {sublet.bath} bath</li>
+              <li>Start date: {sublet.startDate}</li>
+              <li>End date: {sublet.endDate}</li>
+              <li> Floor Plan: {sublet.bedrooms} bed, {sublet.bathrooms} bath</li>
               <li>Listing description: {sublet.description}</li>
             </ul>
           </div>,
@@ -55,11 +53,11 @@ export default function ProfilePage() {
       <h1 style={{color: 'black'}}>Your reviews</h1>
       <div className="reviews">
         {data.reviews.map((review) =>
-          <div key={review.id}>
+          <div key={review.userId}>
             <ul>
-              <li>Apartment name: {review.apartment_name}</li>
+              <li>Apartment name: </li>
               <li>Rating: {review.rating}</li>
-              <li>Comment: {review.comment}</li>
+              <li>Comment: {review.description}</li>
             </ul>
           </div>,
         )}

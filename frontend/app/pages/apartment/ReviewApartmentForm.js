@@ -13,11 +13,11 @@ export default function ReviewApartment() {
       userId: auth.currentUser.displayName,
       apartment: ApartmentName,
       rating: rating,
-      comment: comment,
+      description: comment,
     };
     console.log(data);
     fetch('https://leaslybackend.herokuapp.com/api/review', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },

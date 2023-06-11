@@ -64,20 +64,19 @@ const ApartmentSubleaseBoard = ({listings}) => {
       <div className="bountyView">
         {(listings.length === 0) ? <p className="noSubleases"> No Current Subleases!</p> :
           listings.map((sublet) => {
-            if (sublet.subleaser_id) {
+            if (sublet.leaserId) {
               return (
-                <div className="bountyCards">
-                  <img className="bountyImage" src={`data:image/jpeg;base64,${sublet.image}`} />
+                <div className="bountyCards" key={sublet.leaserId}>
+                  <img className="bountyImage" src={`data:image/jpeg;base64,${sublet.photo}`} />
                   <div className="bountyGeneral">
-                    <p> {sublet.apartment_name}</p>
-                    <p> Poster: {sublet.subleaser_id}</p>
-                    <p> Floor Plan: {sublet.bed} bed, {sublet.bath} bath</p>
+                    <p> Poster: {sublet.leaserId}</p>
+                    <p> Floor Plan: {sublet.bedrooms} bed, {sublet.bathrooms} bath</p>
                     <p> Price: ${sublet.rent}/month</p>
                   </div>
                   <div className="bountyDescription">
                     <p> {sublet.description}</p>
                     <button type="button" className="aptmntViewButton" onClick={() => {
-                      navigation.navigate('messages', {sublet: sublet.subleaser_id});
+                      navigation.navigate('messages', {sublet: sublet.leaserId});
                     }}> Message </button>
                   </div>
                 </div>

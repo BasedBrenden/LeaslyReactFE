@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   AlertDialog,
-  Box,
   Button,
   Center,
   Heading,
@@ -238,7 +237,7 @@ export default function MapPage(props) {
   useEffect(() => {
     // Using fetch to fetch the api from
     // flask server it will be redirected to proxy
-    fetch('https://leaslybackend.herokuapp.com/api/apartments').then((res) =>
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/apartments').then((res) =>
       res.json().then((data) => {
         // Setting a data from api
         setAllApartmentsArr(data);

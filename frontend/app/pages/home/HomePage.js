@@ -14,26 +14,7 @@ import ApartmentCarousel from '../../components/Apartment Carousel';
 
 function HomePage(props) {
   const {navigation} = props;
-
-
-  const [data, setdata] = useState({
-    listings: [],
-  });
-
-  // Using useEffect for single rendering
-  useEffect(() => {
-    // Using fetch to fetch the api from
-    // flask server it will be redirected to proxy
-    fetch('https://leaslybackend.herokuapp.com/api/sublets?sort_by=date_dec').then((res) =>
-      res.json().then((sublets) => {
-        // Setting a data from api
-        // only one listing rn, feel free to add some
-        setdata({
-          listings: sublets,
-        });
-      }),
-    );
-  }, []);
+  const [data, setData] = useState([]);
 
   const jumbo = {
     pt: '12rem',
@@ -46,6 +27,14 @@ function HomePage(props) {
     bold: true,
   };
 
+  useEffect(() => {
+    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/sortedSubleases').then((response) => response.json()).then((sublets) => {
+      setData({
+        listings: sublets,
+      });
+    });
+  }, []);
+
   return (
     <View>
       <ImageBackground source={{uri: backgroundImage}} w="100%">
@@ -56,7 +45,7 @@ function HomePage(props) {
           </Center>
         </Flex>
       </ImageBackground>
-      <ApartmentCarousel navigation={navigation} listings={data.listings}/>
+      <ApartmentCarousel listings={data.listings}/>
       <Center>
         <HStack mt={10} space={10}>
           <Button onPress={() => navigation.navigate('addApartment')}>Create a New Listing</Button>
