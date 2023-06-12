@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {auth} from '../../util/FirebaseFuncs';
+import ApartmentSubleaseBoard from '../../components/ApartmentSubleaseBoard';
+import ApartmentReviews from '../../components/ApartmentReviews';
 
 export default function ProfilePage() {
   const [listings, setListings] = useState([]);
@@ -28,7 +30,7 @@ export default function ProfilePage() {
       <h1 style={{color: 'black'}}>Username</h1>
       <p>{auth.currentUser.displayName}</p>
       <h1 style={{color: 'black'}}>Your listings</h1>
-      <div className="listings">
+      {/* <div className="listings">
         {listings.map((sublet) =>
           <div key={sublet.rent}>
             <ul>
@@ -41,20 +43,13 @@ export default function ProfilePage() {
             </ul>
           </div>,
         )}
-
       </div>
+      */}
+      <ApartmentSubleaseBoard listings={listings} />
 
       <h1 style={{color: 'black'}}>Your reviews</h1>
       <div className="reviews">
-        {reviews.map((review, index) =>
-          <div key={index}>
-            <ul>
-              <li>Apartment name: {review.apartmentName}</li>
-              <li>Rating: {review.rating}</li>
-              <li>Comment: {review.description}</li>
-            </ul>
-          </div>,
-        )}
+        <ApartmentReviews reviews={reviews} />
       </div>
     </div>
   );

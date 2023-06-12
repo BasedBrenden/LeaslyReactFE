@@ -4,7 +4,6 @@ import {Dimensions} from 'react-native';
 import {
   Button,
   Center,
-  Image,
   Text,
   VStack,
   View,

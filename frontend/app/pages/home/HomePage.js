@@ -48,7 +48,7 @@ function HomePage(props) {
       <ApartmentCarousel listings={data.listings}/>
       <Center>
         <HStack mt={10} space={10}>
-          <Button onPress={() => navigation.navigate('addApartment')}>Create a New Listing</Button>
+          <Button onPress={() => navigation.navigate('addApartment', {apartmentName: 'none'})}>Create a New Listing</Button>
           <Button onPress={() => navigation.navigate('allApartments')}>View All Apartments</Button>
         </HStack>
       </Center>

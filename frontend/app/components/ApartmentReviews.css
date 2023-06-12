@@ -2,9 +2,8 @@
     width: 100%;
     display: grid;
     grid-template-areas:
-    'title'
     'reviewList';
-    grid-template-rows: 5rem max(30rem);
+    grid-template-rows: max(30rem);
 }
 
 .reviewTitle{
@@ -36,6 +35,8 @@
     'img review review';
     grid-template-columns: .25fr 1fr 1fr;
     grid-template-rows:min-content min-content;
+    width: 80%;
+    margin: auto;
     
     
 }

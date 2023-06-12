@@ -1,13 +1,10 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import testPFP from '../../assets/profile/dog.jpg';
 import './ApartmentReviews.css';
 
 export default function ApartmentReviews({reviews, apartmentName}) {
-  const navigation = useNavigation();
   return (
     <div className="reviewContainer">
-      <p className="reviewTitle"> Reviews</p>
       <div className="reviewList">
         {(reviews.length === 0) ? <p className="noReviews"> No reviews yet! </p> :
           reviews.map((review) => (
@@ -19,11 +16,6 @@ export default function ApartmentReviews({reviews, apartmentName}) {
             </div>
           ))}
       </div>
-      <button type="button" className="aptmntViewButton" onClick={() => {
-        navigation.navigate('review', {apartmentName: apartmentName});
-      }}>
-        Write a review!
-      </button>
     </div>
   );
 }
