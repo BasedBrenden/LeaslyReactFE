@@ -20,6 +20,7 @@ function NavbarMenu(props) {
   const {navigation, isSignedIn} = props;
   const [isOpen, setIsOpen] = useState(false);
 
+
   const signout = () =>{
     signOut(auth).then(() => {
       navigation.navigate('home');

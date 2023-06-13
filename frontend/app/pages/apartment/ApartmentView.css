@@ -9,9 +9,8 @@
     ;
     grid-template-rows: 42rem 42rem 42rem;
     border: solid 1px black;
-    height: 130rem;
-    width: 80%;
-    margin: 2% auto auto auto;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
 .apartmentInfoContainer{
@@ -54,15 +53,13 @@
     display: flex;
     margin:auto;
     flex-direction: row;
-    justify-content: space-around;
-    
-    width: 40rem;
+    width: 30rem;
     overflow: auto;
 }
 
 .amenitiesContainer > div{
     background-color: rgb(121, 121, 121);
-    width: 30%;
+    width: 3.75rem;
     height: 7rem;
     color: white;
     border: 1px solid burlywood;

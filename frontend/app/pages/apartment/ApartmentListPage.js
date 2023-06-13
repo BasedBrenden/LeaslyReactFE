@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './ApartmentListPage.css';
+import {Dimensions} from 'react-native';
+import {View, Center, Flex, Button} from 'native-base';
 
 export default function ApartmentListPage(props) {
   const [allApartmentsArr, setAllApartmentsArr] = useState([]);
@@ -19,21 +21,26 @@ export default function ApartmentListPage(props) {
 
   const {navigation} = props;
   return (
-    <div className="mainContainer">
-      <div className="listContainer">
-        {allApartmentsArr.map((apartment) =>
-          <div className="apartmentCard" key={apartment.name}>
-            <img src={apartment.photo} alt="n/a" />
-            <p>{apartment.name}</p>
-            {/* on click, get the apartments name and pass that as a  prop to apartmntview.js.
-                      or pass the apartments name itself to navigate("")*/}
-            {/* :id will replace /00. :id is simply the UUID for the apartment that they are clicking on, or just apartment.name for now */}
-            <button className="generalBtn" type="button" onClick={() => {
-              navigation.navigate('viewApartment', {apartment: apartment.name});
-            }}>More Info</button>
-          </div>)}
-      </div>
-    </div>
+    <View >
+      <Center w={'100%'} pl={'10%'} pr={'10%'}m={'auto'} backgroundColor={'rgb(22, 22, 26)'}>
+        <Flex style={{
+          flexFlow: 'row wrap',
+          justifyContent: 'space-around',
+          marginTop: '5%',
+          backgroundColor: 'rgb(22, 22, 26)',
+        }}>
+          {allApartmentsArr.map((apartment) =>
+            <div className="apartmentCard" key={apartment.name}>
+              <img src={apartment.photo} alt="n/a" />
+              <p>{apartment.name}</p>
+              {/* on click, get the apartments name and pass that as a  prop to apartmntview.js.
+                        or pass the apartments name itself to navigate("")*/}
+              {/* :id will replace /00. :id is simply the UUID for the apartment that they are clicking on, or just apartment.name for now */}
+              <Button w={'80%'} m={'auto'} mt={'15%'} onPress={() => navigation.navigate('viewApartment', {apartment: apartment.name})}>More Info</Button>
+            </div>)}
+        </Flex>
+      </Center>
+    </View>
   );
 }
 

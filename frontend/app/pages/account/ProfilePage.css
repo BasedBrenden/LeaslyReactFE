@@ -8,7 +8,7 @@ h1{
     "userInfoContainer"
     "userPostsContainer";
     grid-template-rows: 1fr auto;
-    width: 80%;
+    width: 90%;
     margin: auto;
     background-color: white;
 }
@@ -25,8 +25,9 @@ h1{
     display: flex;
     justify-content: end;
     border-radius: 12px;
-    width: 90%;
+    width: 11rem;
     margin: auto;
+    
 }
 
 .photoChangeDiv:hover{
@@ -43,10 +44,11 @@ h1{
 .dropdownContent{
     display: flex;
     flex-direction: column;
-    width:90%;
-    margin: auto;
-    position: relative;
+    width:11rem;
+    position: absolute;
     visibility: hidden;
+    border-radius: 24px;
+    z-index:1
 }
 
 .show{
