@@ -1,0 +1,68 @@
+h1{
+    color: black
+}
+
+#profileContainer{
+    display: grid;
+    grid-template-areas:  
+    "userInfoContainer"
+    "userPostsContainer";
+    grid-template-rows: 1fr auto;
+    width: 80%;
+    margin: auto;
+    background-color: white;
+}
+
+#userInfoContainer{
+    grid-area: userInfoContainer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.photoChangeDiv{
+    background-color: rgba(148, 148, 148, 0.739);
+    display: flex;
+    justify-content: end;
+    border-radius: 12px;
+    width: 90%;
+    margin: auto;
+}
+
+.photoChangeDiv:hover{
+    background-color: rgba(61, 60, 60, 0.739);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.userName{
+    font-size: 5rem;
+    font-weight: bolder;
+}
+
+.dropdownContent{
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin: auto;
+    position: relative;
+    visibility: hidden;
+}
+
+.show{
+    visibility: visible;
+}
+
+.dropdownItem{
+    font-size: 2rem;
+    font-weight: bolder;
+    color: black;
+    text-decoration: none;
+    background-color: rgba(148, 148, 148, 0.739);
+}
+
+.dropdownItem:hover{
+    background-color: rgba(61, 60, 60, 0.739);
+    transition: 0.5s;
+    cursor: pointer;
+}

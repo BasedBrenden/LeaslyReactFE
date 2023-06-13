@@ -58,46 +58,15 @@ export default function SignupPage(props) {
    * Creates a user in firebase based on the form data.
    */
   const signup = async () => {
-    let noError = true;
     await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          createMsgDoc();
           updateProfile(auth.currentUser, {
             displayName: username,
           }).catch((errorr)=>{
             console.log({errorr});
-            noError = false;
           });
-          const userData = {
-            email: email,
-            password: password,
-            username: username,
-            userId: userCredential.user.uid, // add user ID to data object
-          };
-
-          fetch('https://leaslybackend.herokuapp.com/api/signup',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-              })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data);
-                createMsgDoc();
-                navigation.navigate('home');
-              })
-              .catch((err) => {
-                console.error(err);
-                noError = false;
-              });
-        })
-        .catch((err) => {
-          console.error(`${err.code}: ${err.message}`);
-          noError = false;
         });
-    return noError;
   };
 
   /* get username, create document with that name in userData collection, and a field
@@ -113,7 +82,7 @@ export default function SignupPage(props) {
             ],
           },
         ],
-      },
+        photo: 'https://favim.com/pd/p/orig/2019/02/22/dog-puppy-cute-Favim.com-6921035.jpg'},
     };
     await setDoc(doc(db, 'userData', username), dataStruc);
   };
@@ -165,8 +134,7 @@ export default function SignupPage(props) {
               .addError('Your password must be 8 characters or longer.', ['pass_length'])
               .addLabel('Confirm Password')
               .addPasswordInput(setConfirmPassword, ['signup', 'pass_matches'], {isRequired: true})
-              .addError('Passwords do not match!', ['pass_matches'])
-              .addError('Failed to sign-up.', ['signup']),
+              .addError('Passwords do not match!', ['pass_matches']),
       )
       .addButton(
           'Sign up',
