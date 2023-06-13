@@ -20,15 +20,26 @@ export default function ApartmentCarousel(props) {
     const item = listings[index];
     return (
       <Center>
-        <VStack space={3}
-          borderRadius={5}
-          h={250}
-          p={50}
-          ml={25}
-          mr={25}>
+        <VStack
+          space = {4}
+          style={{
+            shadowColor: '#5b43a9',
+            shadowOffset: {width: 0, height: 10},
+            shadowOpacity: 1,
+            shadowRadius: 40,
+            elevation: 10, // This property is required for Android
+            borderRadius: 5,
+            borderColor: 'gray',
+            borderWidth: 3,
+            backgroundColor: 'rgb(46, 46, 53)',
+            width: 400,
+            height: 325,
+            padding: 50,
+            margin: 25,
+          }}>
           {item.leaserId &&
           <>
-            <Text> {item.apartmentName}</Text>
+            <Text fontSize={'xl'}> {item.apartmentName}</Text>
             <Text>Poster: {item.leaserId}</Text>
             <Text>Floor Plan: {item.bedrooms} bed, {item.bathrooms} bath</Text>
             <Text>Price: ${item.rent}/month</Text>
@@ -39,20 +50,18 @@ export default function ApartmentCarousel(props) {
             </Button>
           </>
           }
-          <Text fontSize={'xl'}>{item.title}</Text>
-          <Text>{item.text}</Text>
         </VStack>
       </Center>
     );
   };
 
   return (
-    <View flex={true} w={'100%'} h={325}>
+    <View flex={true} w={'100%'} h={Dimensions.get('window').height / 3}>
       <Text fontSize={'xl'} textAlign={'center'}>Subleases Available </Text>
       <Carousel
         loop
         width={Dimensions.get('window').width}
-        height={325}
+        height={400}
         autoPlay={true}
         data={listings}
         scrollAnimationDuration={1500}

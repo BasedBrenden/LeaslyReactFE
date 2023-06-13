@@ -8,7 +8,7 @@ export default function ApartmentReviews({reviews, apartmentName}) {
       <div className="reviewList">
         {(reviews.length === 0) ? <p className="noReviews"> No reviews yet! </p> :
           reviews.map((review) => (
-            <div className="uniqueReview" key={review.userId}>
+            <div className="uniqueReview" key={review.description}>
               <img className="reviewerPFP" src={testPFP}/>
               <p className="reviewerUsername">Name: {review.userId}</p>
               <p className="reviewerRating">Rating: {review.rating}/5</p>

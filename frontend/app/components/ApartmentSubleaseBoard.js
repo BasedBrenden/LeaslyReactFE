@@ -1,6 +1,7 @@
 import React from 'react';
 import './ApartmentSubleaseBoard.css';
 import {useNavigation} from '@react-navigation/native';
+import genericApartmentPhoto from '../../assets/apartments/generic_sublease.jpg';
 
 const ApartmentSubleaseBoard = ({listings, apartmentName}) => {
   /* ---------------------------------- Props --------------------------------- */
@@ -14,7 +15,7 @@ const ApartmentSubleaseBoard = ({listings, apartmentName}) => {
             if (sublet.leaserId) {
               return (
                 <div className="bountyCards" key={index}>
-                  <img className="bountyImage" src={`data:image/jpeg;base64,${sublet.photo}`} />
+                  <img className="bountyImage" src={genericApartmentPhoto} />
                   <div className="bountyGeneral">
                     <p>{apartmentName}</p>
                     <p> Poster: {sublet.leaserId}</p>

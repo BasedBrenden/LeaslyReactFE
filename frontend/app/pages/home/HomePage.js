@@ -36,7 +36,8 @@ function HomePage(props) {
   }, []);
 
   return (
-    <View>
+    <View
+      h={'100%'}>
       <ImageBackground source={{uri: backgroundImage}} w="100%">
         <Flex {...jumbo}>
           <Center>
@@ -46,8 +47,8 @@ function HomePage(props) {
         </Flex>
       </ImageBackground>
       <ApartmentCarousel listings={data.listings}/>
-      <Center>
-        <HStack mt={10} space={10}>
+      <Center backgroundColor={'rgb(22, 22, 26)'}>
+        <HStack mt={'auto'} space={10}>
           <Button onPress={() => navigation.navigate('addApartment', {apartmentName: 'none'})}>Create a New Listing</Button>
           <Button onPress={() => navigation.navigate('allApartments')}>View All Apartments</Button>
         </HStack>
