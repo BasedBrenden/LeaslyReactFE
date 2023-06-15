@@ -1,10 +1,11 @@
 import React from 'react';
 import holderPFP from '../../../assets/profile/dog.jpg';
 import {useRoute} from '@react-navigation/native';
-import {getDoc, doc, updateDoc, arrayUnion} from 'firebase/firestore';
+import {getDoc, doc, updateDoc} from 'firebase/firestore';
 import './Messages.css';
 import {db, auth} from '../../util/FirebaseFuncs';
 import {useState, useEffect} from 'react';
+import {View, Center} from 'native-base';
 
 export default function Messages() {
   const [messageList, setMessageList] = useState([]);
@@ -12,6 +13,7 @@ export default function Messages() {
   const [messagerName, setMessagerName] = useState(' ');
   /* not neccessary, but will optimize later*/
   const [focusedID, setFocusedID] = useState();
+
   const sendMessage = async ()=>{
     const senderTempArr = messageList.Inbox;
     // update current user conversation
@@ -54,15 +56,15 @@ export default function Messages() {
         // if found, add to doc
         if (convo.senderID === auth.currentUser.displayName) {
           receiverTempArr[index].conversation.push(message);
+          found = true;
           await updateDoc(receiverDocRef, {
             'user.Inbox': receiverTempArr,
           });
-          found = true;
         }
       });
       // if not found, merge with new information to create a conversation
-      if (found === false && receiverTempArr.length === 0) {
-        const data = {
+      if (found === false) {
+        const message2 = {
           conversation: [
             {
               message: document.getElementById('messageBox').value,
@@ -71,8 +73,9 @@ export default function Messages() {
           ],
           senderID: auth.currentUser.displayName,
         };
+        receiverTempArr.push(message2);
         await updateDoc(receiverDocRef, {
-          'user.Inbox': arrayUnion(data),
+          'user.Inbox': receiverTempArr,
         });
       }
     } else {
@@ -136,81 +139,83 @@ export default function Messages() {
   }, []);
 
   return (
-    <div>
-      <div className="messagesContainer">
-        <br />
-        <div className="messagesUserList">
-          <div className="newMessageContainer">
-            <p className="usernameMsgError"> Enter a username to start a new message!</p>
-            <input type="text" placeholder="Enter users email address" className="usernameMsgSearch"/>
-            <button type="button" onClick={()=>{
-              createNewConversation(document.querySelector('.usernameMsgSearch').value);
-            }}>Send</button>
-          </div>
-          <div className="indivUserContainer">
-            {/* this will have to be ternary based on a state. If there are other users they have had a conversation with
-                        ,each one will be its own div*/}
-            {(messageList.Inbox) ? messageList.Inbox.map((user, index)=>
-              <div className="indivUser" key ={messageList.Inbox[index].senderID} onClick={()=>{
-                changeConversation(index);
-              }}>
-                <img className="indivUserImg" src={holderPFP} />
-                {/* will hold the username of the account talking too*/}
-                <p className="indivUserName"> {messageList.Inbox[index].senderID}</p>
-                {/* will be a quick preview of the last recieved or sent message*/}
-                <p className="indivUserPreview"> </p>
-              </div>,
-            ) :
-            <div>
-              <p>No messages</p>
-            </div>}
-          </div>
-        </div>
-        {/* another ternary based on state. If there are messages, it will default to loading the first message info,
-                            if there are not any, all of this will just be blank until a user from the messages list is focused. */}
-        <div className="messagesView">
-          <div className="messagerInfo">
-            <p className="messagerName">{messagerName}</p>
-          </div>
-          {/* Holds the conversation log. Another state ternary. If theres a conversation, it will display the messages, if not,
-                        stay empty*/}
-          <div className="messageHistory">
-            {(focusedUser) ? focusedUser.map((message, index)=>{
-              if (message.UID === auth.currentUser.displayName) {
-                return (
-                  <div className="rightMsg" key={index}>
-                    <div>
-                      <p>{message.message} </p>
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={index}>
-                    <div>
-                      <p>{message.message} </p>
-                    </div>
-                  </div>
-                );
-              }
-            },
-            ) :
-            <div>
-              <div>
-                <p>   </p>
-              </div>
+    <View>
+      <Center w={'100%'} pl={'10%'} pr={'10%'}m={'auto'} backgroundColor={'rgb(22, 22, 26)'}>
+        <div className="messagesContainer">
+          <br />
+          <div className="messagesUserList">
+            <div className="newMessageContainer">
+              <p className="usernameMsgError"> Enter a username to start a new message!</p>
+              <input type="text" placeholder="Enter users email address" className="usernameMsgSearch"/>
+              <button type="button" onClick={()=>{
+                createNewConversation(document.querySelector('.usernameMsgSearch').value);
+              }}>Send</button>
             </div>
-            }
-            <div className="to-be-removed" />
+            <div className="indivUserContainer">
+              {/* this will have to be ternary based on a state. If there are other users they have had a conversation with
+                          ,each one will be its own div*/}
+              {(messageList.Inbox) ? messageList.Inbox.map((user, index)=>
+                <div className="indivUser" key ={messageList.Inbox[index].senderID} onClick={()=>{
+                  changeConversation(index);
+                }}>
+                  <img className="indivUserImg" src={holderPFP} />
+                  {/* will hold the username of the account talking too*/}
+                  <p className="indivUserName"> {messageList.Inbox[index].senderID}</p>
+                  {/* will be a quick preview of the last recieved or sent message*/}
+                  <p className="indivUserPreview"> </p>
+                </div>,
+              ) :
+              <div>
+                <p>No messages</p>
+              </div>}
+            </div>
           </div>
-          <div className="messageTypeBox">
-            <textarea id="messageBox" />
-            {/* OnClick, send contents of textarea*/}
-            <button className="messageSendBtn" type="button" onClick={()=>sendMessage()}>Send Message</button>
+          {/* another ternary based on state. If there are messages, it will default to loading the first message info,
+                              if there are not any, all of this will just be blank until a user from the messages list is focused. */}
+          <div className="messagesView">
+            <div className="messagerInfo">
+              <p className="messagerName">{messagerName}</p>
+            </div>
+            {/* Holds the conversation log. Another state ternary. If theres a conversation, it will display the messages, if not,
+                          stay empty*/}
+            <div className="messageHistory">
+              {(focusedUser) ? focusedUser.map((message, index)=>{
+                if (message.UID === auth.currentUser.displayName) {
+                  return (
+                    <div className="rightMsg" key={index}>
+                      <div>
+                        <p>{message.message} </p>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={index}>
+                      <div>
+                        <p>{message.message} </p>
+                      </div>
+                    </div>
+                  );
+                }
+              },
+              ) :
+              <div>
+                <div>
+                  <p>   </p>
+                </div>
+              </div>
+              }
+              <div className="to-be-removed" />
+            </div>
+            <div className="messageTypeBox">
+              <textarea id="messageBox" />
+              {/* OnClick, send contents of textarea*/}
+              <button className="messageSendBtn" type="button" onClick={()=>sendMessage()}>Send Message</button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </Center>
+    </View>
   );
 }
 
