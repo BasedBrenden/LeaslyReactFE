@@ -1,4 +1,5 @@
-# Contributing
+## If you are using a web browser, and would like prefer to view the website, please go to https://leasly-388c5.web.app/ . To have backend information load, please select the lock icon at the top of the address bar, select "Connection Secure" and then "Disable Protection for now". This will allow you to load in the backend via the browser, and will only affect your connection to this website. Currently working on a fix regarding SSL Certification.
+
 
 ## Frontend
 
@@ -15,21 +16,8 @@ npm install
 ```
 
 ### Starting Project
-You can start the frontend with:
+You can start the frontend from the corresponding folder by entering:
 ```
 npm run web
 ```
 
-## Backend
-
-### Downloading Dependencies
-From the `backend` folder, run:
-```
-pip install -r requirements.txt
-```
-
-### Starting Project
-You can start the backend with:
-```
-python routes.py
-```
