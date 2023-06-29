@@ -28,7 +28,7 @@ function HomePage(props) {
   };
 
   useEffect(() => {
-    fetch('http://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/sortedSubleases').then((response) => response.json()).then((sublets) => {
+    fetch('https://leaslybackend2-env.eba-p3eyijpv.us-east-1.elasticbeanstalk.com/api/sortedSubleases').then((response) => response.json()).then((sublets) => {
       setData({
         listings: sublets,
       });
