@@ -21,3 +21,5 @@ You can start the frontend from the corresponding folder by entering:
 npm run web
 ```
 
+## Backend
+Here is the link for the backend code, a complete rewrite using java springboot, and AWS services: https://github.com/BasedBrenden/Leasly-backend/tree/main/leasly-demo
